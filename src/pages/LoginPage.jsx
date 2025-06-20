@@ -35,7 +35,7 @@ const LoginPage = () => {
       if (data.user.role === "creator") {
         navigate("/creator-dashboard");
       } else {
-        navigate("/dashboard");
+        navigate("/recommendations");
       }
     } catch (err) {
       setError("Login failed");
