@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 import TiptapEditor from "../components/TiptapEditor";
+import { useNavigate } from "react-router-dom";
 
 const CreateBlogPage = () => {
   const [title, setTitle] = useState("");
@@ -8,6 +9,7 @@ const CreateBlogPage = () => {
   const [tags, setTags] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,6 +50,14 @@ const CreateBlogPage = () => {
   return (
     <div>
       <Header user={JSON.parse(localStorage.getItem("user"))} />
+      <button
+        onClick={() => navigate(-1)}
+        className="fixed top-24 left-10 flex items-center justify-center bg-black text-white hover:bg-orange-700 w-10 h-10 rounded-full shadow hover:bg-black hover:text-white transition z-10"
+        style={{ fontWeight: 600, fontSize: 22 }}
+        aria-label="Back"
+      >
+        ←
+      </button>
       <div className="max-w-2xl mx-auto mt-10 p-6 bg-white rounded shadow">
         <h2 className="text-xl font-bold mb-4">Create Blog</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">

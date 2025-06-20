@@ -12,15 +12,19 @@ const Header = ({ user }) => {
   };
 
   return (
-    <header className="bg-black text-white px-6 py-3 flex justify-between items-center">
-      <Link to="/" className="font-bold text-lg">FeedFlow</Link>
+    <header className="bg-black text-white px-6 py-5 flex justify-between items-center" style={{ minHeight: '68px' }}>
+      <Link to="/" className="font-bold text-2xl">FeedFlow</Link>
       <nav className="flex gap-4">
         {user ? (
           <>
-            <Link to={user.role === "creator" ? "/creator-dashboard" : "/dashboard"}>
-              Dashboard
+            <Link
+              to="/dashboard"
+              className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded transition font-semibold"
+              style={{ minWidth: '100px', textAlign: 'center' }}
+            >
+              Your Blogs
             </Link>
-            <button onClick={handleLogout} className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded">
+            <button onClick={handleLogout} className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded transition font-semibold" style={{ minWidth: '100px' }}>
               Logout
             </button>
           </>

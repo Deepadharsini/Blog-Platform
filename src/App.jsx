@@ -9,6 +9,7 @@ import UserDashboard from "./pages/UserDashboard";
 import CreatorDashboard from "./pages/CreatorDashboard";
 import RoleSelectionPage from "./pages/RoleSelectionPage";
 import EditBlogPage from "./pages/EditBlogPage";
+import RecommendationsPage from "./pages/RecommendationsPage";
 
 const App = () => (
   <Router>
@@ -22,6 +23,7 @@ const App = () => (
       <Route path="/dashboard" element={<UserDashboard />} />
       <Route path="/creator-dashboard" element={<CreatorDashboard />} />
       <Route path="/edit/:id" element={<EditBlogPage />} />
+      <Route path="/recommendations" element={<RecommendationsPage />} />
       {/* Optionally keep HomePage for direct navigation */}
       {/* <Route path="/home" element={<HomePage />} /> */}
     </Routes>
