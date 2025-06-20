@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Header from "../components/Header";
 
 const LoginPage = () => {
@@ -7,6 +7,9 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const selectedRole = params.get("role") || "reader";
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,9 +25,13 @@ const LoginPage = () => {
         setError(data.message || "Login failed");
         return;
       }
+      // Enforce role-based login
+      if (data.user.role !== selectedRole) {
+        setError(`You are not registered as a ${selectedRole}.`);
+        return;
+      }
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-      // Role-based redirect
       if (data.user.role === "creator") {
         navigate("/creator-dashboard");
       } else {
@@ -39,7 +46,9 @@ const LoginPage = () => {
     <div>
       <Header />
       <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
-        <h2 className="text-xl font-bold mb-4">Login</h2>
+        <h2 className="text-xl font-bold mb-4">
+          {selectedRole === "creator" ? "Creator Login" : "Reader Login"}
+        </h2>
         <form onSubmit={handleLogin} className="flex flex-col gap-4">
           <input
             type="email"

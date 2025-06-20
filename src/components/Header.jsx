@@ -12,7 +12,7 @@ const Header = ({ user }) => {
 
   return (
     <header className="bg-blue-700 text-white px-6 py-3 flex justify-between items-center">
-      <Link to="/" className="font-bold text-lg">AI Blog Platform</Link>
+      <Link to="/" className="font-bold text-lg">FeedFlow</Link>
       <nav className="flex gap-4">
         {user ? (
           <>
