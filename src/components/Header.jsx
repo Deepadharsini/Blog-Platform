@@ -14,17 +14,22 @@ const Header = ({ user }) => {
   return (
     <header className="bg-black text-white px-6 py-5 flex justify-between items-center" style={{ minHeight: '68px' }}>
       <Link to="/" className="font-bold text-2xl">FeedFlow</Link>
-      <nav className="flex gap-4">
+      <nav className="flex gap-4 items-center">
         {user ? (
           <>
-            <Link
-              to="/dashboard"
-              className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded transition font-semibold"
-              style={{ minWidth: '100px', textAlign: 'center' }}
-            >
-              Your Blogs
-            </Link>
-            <button onClick={handleLogout} className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded transition font-semibold" style={{ minWidth: '100px' }}>
+            <span className="ml-2 text-lg font-semibold">Hi, {user.name}</span>
+            {user.role === "creator" ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded transition font-semibold"
+                  style={{ minWidth: '100px', textAlign: 'center' }}
+                >
+                  Your Blogs
+                </Link>
+              </>
+            ) : null}
+            <button onClick={handleLogout} className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded transition font-semibold ml-2" style={{ minWidth: '100px' }}>
               Logout
             </button>
           </>
