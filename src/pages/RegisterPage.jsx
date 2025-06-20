@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import InterestSelector from "../components/InterestSelector";
 
@@ -7,18 +7,42 @@ const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("reader");
   const [interests, setInterests] = useState([]);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    // TODO: Add real register logic
-    if (!name || !email || !password) {
-      setError("Please fill all fields");
-      return;
-    }
     setError("");
-    alert("Registered (mock)");
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          role,
+          interests,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.message || "Registration failed");
+        return;
+      }
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      // Role-based redirect
+      if (data.user.role === "creator") {
+        navigate("/creator-dashboard");
+      } else {
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      setError("Registration failed");
+    }
   };
 
   return (
@@ -48,6 +72,17 @@ const RegisterPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <div>
+            <div className="mb-2 font-medium">Select Role:</div>
+            <select
+              value={role}
+              onChange={e => setRole(e.target.value)}
+              className="border p-2 rounded w-full"
+            >
+              <option value="reader">Reader</option>
+              <option value="creator">Creator</option>
+            </select>
+          </div>
           <div>
             <div className="mb-2 font-medium">Select Interests:</div>
             <InterestSelector selected={interests} setSelected={setInterests} />
