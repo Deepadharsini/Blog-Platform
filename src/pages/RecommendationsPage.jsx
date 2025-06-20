@@ -3,6 +3,9 @@ import BlogCard from "../components/BlogCard";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
 
+const CARD_WIDTH = 480;
+const CARD_HEIGHT = 340;
+
 const RecommendationsPage = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -49,8 +52,8 @@ const RecommendationsPage = () => {
   return (
     <div>
       <Header user={user} />
-      <div className="max-w-6xl mx-auto mt-8">
-        <h1 className="text-2xl font-bold mb-4">Your Personalized Recommendations</h1>
+      <div className="max-w-6xl mx-auto mt-8 flex flex-col items-center">
+        <h1 className="text-2xl font-bold mb-4 text-center">Your Personalized Recommendations</h1>
         {loading ? (
           <div className="text-center text-gray-500 py-8">Loading...</div>
         ) : error ? (
@@ -58,10 +61,14 @@ const RecommendationsPage = () => {
         ) : blogs.length === 0 ? (
           <div className="text-center text-gray-500 py-8">No recommendations found.</div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 justify-center">
             {blogs.map((blog) => (
-              <div key={blog._id} className="flex items-stretch">
-                <div className="w-full h-full flex flex-col justify-between" style={{ minHeight: 320, maxHeight: 420 }}>
+              <div
+                key={blog._id}
+                className="flex items-stretch justify-center"
+                style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}
+              >
+                <div className="w-full h-full flex flex-col justify-between">
                   <BlogCard blog={blog} onClick={() => {}} />
                 </div>
               </div>
