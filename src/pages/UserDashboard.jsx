@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { Link, useNavigate } from "react-router-dom";
+import RecommendationsPage from "./RecommendationsPage";
 
 const UserDashboard = () => {
   const [blogs, setBlogs] = useState([]);
@@ -52,6 +53,12 @@ const UserDashboard = () => {
     }
   };
 
+  // If user is a reader, show only recommendations
+  if (user && user.role === "reader") {
+    return <RecommendationsPage />;
+  }
+
+  // If user is a creator, show their blogs dashboard (original content)
   return (
     <div className="min-h-screen bg-black-200">
       <Header user={user} />
