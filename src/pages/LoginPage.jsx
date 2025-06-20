@@ -65,7 +65,7 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           {error && <div className="text-red-500 text-sm">{error}</div>}
-          <button type="submit" className="bg-blue-700 text-white py-2 rounded">
+          <button type="submit" className="bg-orange-700 hover:bg-orange-600 text-white font-semibold py-2 rounded transition">
             Login
           </button>
         </form>

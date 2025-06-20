@@ -68,7 +68,7 @@ const CreateBlogPage = () => {
           />
           {error && <div className="text-red-500 text-sm">{error}</div>}
           {success && <div className="text-green-600 text-sm">{success}</div>}
-          <button type="submit" className="bg-blue-700 text-white py-2 rounded">
+          <button type="submit" className="bg-black hover:bg-orange-700 text-white py-2 rounded">
             Create
           </button>
         </form>

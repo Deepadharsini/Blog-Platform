@@ -1,37 +1,91 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
+import { Link } from "react-router-dom";
 
 const CreatorDashboard = () => {
-  // TODO: Fetch real creator stats
-  const user = { name: "Alice", role: "creator" };
-  const blogs = [
-    { title: "AI in Healthcare", views: 120, likes: 10 },
-    { title: "Travel with AI", views: 80, likes: 5 },
-  ];
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      setLoading(true);
+      setError("");
+      try {
+        const token = localStorage.getItem("token");
+        const res = await fetch("http://localhost:5000/api/dashboard/creator", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          setError(data.message || "Failed to fetch blogs");
+          setBlogs([]);
+        } else {
+          setBlogs(data.blogs || []);
+        }
+      } catch (err) {
+        setError("Failed to fetch blogs");
+        setBlogs([]);
+      }
+      setLoading(false);
+    };
+    fetchBlogs();
+  }, []);
 
   return (
-    <div>
+    <div className="min-h-screen bg-black-200">
       <Header user={user} />
-      <div className="max-w-2xl mx-auto mt-10 p-6 bg-white rounded shadow">
-        <h2 className="text-xl font-bold mb-4">Your Blogs Engagement</h2>
-        <table className="w-full text-left">
-          <thead>
-            <tr>
-              <th className="py-2">Title</th>
-              <th className="py-2">Views</th>
-              <th className="py-2">Likes</th>
-            </tr>
-          </thead>
-          <tbody>
-            {blogs.map((blog, idx) => (
-              <tr key={idx} className="border-t">
-                <td className="py-2">{blog.title}</td>
-                <td className="py-2">{blog.views}</td>
-                <td className="py-2">{blog.likes}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="max-w-3xl mx-auto mt-10 p-8 bg-gray-200 rounded-2xl shadow-xl border border-[#f5f5dc]">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-3xl font-extrabold text-black tracking-tight">Your Blogs Engagement</h2>
+          <Link to="/create" className="bg-black hover:bg-orange-700 text-white font-semibold px-5 py-2 rounded-lg shadow-md border border-yellow-600 transition">
+            + Create Blog
+          </Link>
+        </div>
+        {loading ? (
+          <div className="text-center text-gray-500 py-8">Loading...</div>
+        ) : error ? (
+          <div className="text-center text-red-500 py-8">{error}</div>
+        ) : blogs.length === 0 ? (
+          <div className="text-center text-gray-500 py-8">No blogs found. Start by creating one!</div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-separate border-spacing-y-2">
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="py-3 px-4 font-bold text-black rounded-l-lg">Title</th>
+                  <th className="py-3 px-4 font-bold text-black">Views</th>
+                  <th className="py-3 px-4 font-bold text-black">Likes</th>
+                  <th className="py-3 px-4 font-bold text-black rounded-r-lg">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {blogs.map((blog) => (
+                  <tr key={blog._id} className="bg-[#fff] border border-[#f5f5dc] shadow-sm hover:bg-gray-100 transition">
+                    <td className="py-3 px-4 text-black font-medium rounded-l-lg">{blog.title}</td>
+                    <td className="py-3 px-4 text-black">{blog.views}</td>
+                    <td className="py-3 px-4 text-black">{blog.likes || 0}</td>
+                    <td className="py-3 px-4 flex gap-2 rounded-r-lg">
+                      <Link
+                        to={`/edit/${blog._id}`}
+                        className="text-yellow-700 hover:underline font-semibold"
+                      >
+                        Edit
+                      </Link>
+                      <Link
+                        to={`/blog/${blog._id}`}
+                        className="text-black hover:underline font-semibold"
+                      >
+                        View
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -16,13 +16,13 @@ const RoleSelectionPage = () => {
         <h2 className="text-2xl font-bold mb-6">Select Your Role</h2>
         <div className="flex flex-col gap-6">
           <button
-            className="bg-blue-700 text-white py-3 rounded text-lg font-semibold"
+            className="bg-black hover:bg-orange-700 text-white py-3 rounded text-lg font-semibold"
             onClick={() => handleSelect("reader")}
           >
             Reader Login
           </button>
           <button
-            className="bg-green-600 text-white py-3 rounded text-lg font-semibold"
+            className="bg-black hover:bg-orange-700 text-white py-3 rounded text-lg font-semibold"
             onClick={() => handleSelect("creator")}
           >
             Creator Login

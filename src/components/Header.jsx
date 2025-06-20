@@ -6,12 +6,13 @@ const Header = ({ user }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     // Optionally clear user state from Redux here
-    navigate("/login");
+    navigate("/select-role");
   };
 
   return (
-    <header className="bg-blue-700 text-white px-6 py-3 flex justify-between items-center">
+    <header className="bg-black text-white px-6 py-3 flex justify-between items-center">
       <Link to="/" className="font-bold text-lg">FeedFlow</Link>
       <nav className="flex gap-4">
         {user ? (
@@ -19,14 +20,14 @@ const Header = ({ user }) => {
             <Link to={user.role === "creator" ? "/creator-dashboard" : "/dashboard"}>
               Dashboard
             </Link>
-            <button onClick={handleLogout} className="bg-white text-blue-700 px-3 py-1 rounded">
+            <button onClick={handleLogout} className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded">
               Logout
             </button>
           </>
         ) : (
           <>
             <Link to="/login">Login</Link>
-            <Link to="/register" className="bg-white text-blue-700 px-3 py-1 rounded">
+            <Link to="/register" className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded">
               Register
             </Link>
           </>

@@ -85,10 +85,10 @@ const RegisterPage = () => {
           </div>
           <div>
             <div className="mb-2 font-medium">Select Interests:</div>
-            <InterestSelector selected={interests} setSelected={setInterests} />
+            <InterestSelector selected={interests} setSelected={setInterests}/>
           </div>
           {error && <div className="text-red-500 text-sm">{error}</div>}
-          <button type="submit" className="bg-blue-700 text-white py-2 rounded">
+          <button type="submit" className="bg-black hover:bg-orange-700 text-white font-semibold py-2 rounded transition">
             Register
           </button>
         </form>
