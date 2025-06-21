@@ -4,12 +4,12 @@ const INTERESTS = [
   "AI", "Technology", "Health", "Finance", "Travel", "Education", "Food", "Sports", "Art", "Science"
 ];
 
-const InterestSelector = ({ selected, setSelected }) => {
+const InterestSelector = ({ selectedInterests = [], onInterestChange }) => {
   const toggleInterest = (interest) => {
-    setSelected(
-      selected.includes(interest)
-        ? selected.filter((i) => i !== interest)
-        : [...selected, interest]
+    onInterestChange(
+      selectedInterests.includes(interest)
+        ? selectedInterests.filter((i) => i !== interest)
+        : [...selectedInterests, interest]
     );
   };
 
@@ -20,7 +20,7 @@ const InterestSelector = ({ selected, setSelected }) => {
           key={interest}
           type="button"
           className={`px-3 py-1 rounded-full border ${
-            selected.includes(interest)
+            selectedInterests.includes(interest)
               ? "bg-orange-700 text-white"
               : "bg-gray-100 text-gray-700"
           }`}
