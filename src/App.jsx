@@ -16,7 +16,7 @@ import ProfilePage from "./pages/ProfilePage";
 const App = () => (
   <Router>
     <Routes>
-      <Route path="/" element={<RoleSelectionPage />} />
+      <Route path="/" element={<RoleSelectionPage/>} />
       <Route path="/select-role" element={<RoleSelectionPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
