@@ -81,18 +81,18 @@ const RecommendationsPage = () => {
                 </p>
               )}
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 justify-center">
               {recommendationsToDisplay.map((blog) => (
-                <div
-                  key={blog._id}
-                  className="flex items-stretch justify-center"
-                  style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}
-                >
-                  <div className="w-full h-full flex flex-col justify-between">
-                    <BlogCard blog={blog} onClick={() => {}} />
-                  </div>
+              <div
+                key={blog._id}
+                className="flex items-stretch justify-center"
+                style={{ width: CARD_WIDTH, height: CARD_HEIGHT }}
+              >
+                <div className="w-full h-full flex flex-col justify-between">
+                  <BlogCard blog={blog} onClick={() => {}} />
                 </div>
-              ))}
+              </div>
+            ))}
             </div>
           </>
         ) : (

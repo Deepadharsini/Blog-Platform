@@ -55,19 +55,19 @@ const Header = () => {
                     Read History
                   </Link>
                   {user.role === "creator" && (
-                    <Link
-                      to="/dashboard"
+                <Link
+                  to="/dashboard"
                       className="block px-4 py-2 text-sm text-white hover:bg-orange-700"
-                    >
-                      Your Blogs
-                    </Link>
+                >
+                  Your Blogs
+                </Link>
                   )}
                   <button 
                     onClick={handleLogout} 
                     className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-orange-700"
                   >
-                    Logout
-                  </button>
+              Logout
+            </button>
                 </div>
               )}
             </div>

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/authSlice";
 import Header from "../components/Header";
 
 const LoginPage = () => {
@@ -7,6 +9,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const selectedRole = params.get("role") || "reader";
@@ -32,10 +35,11 @@ const LoginPage = () => {
       }
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
+      dispatch(login({ user: data.user, token: data.token }));
       if (data.user.role === "creator") {
         navigate("/creator-dashboard");
       } else {
-        navigate("/recommendations");
+        navigate("/home");
       }
     } catch (err) {
       setError("Login failed");

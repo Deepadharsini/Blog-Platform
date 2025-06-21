@@ -10,12 +10,11 @@ function truncateHtml(html, maxLength) {
 
 const CARD_HEIGHT = 300;
 
-const BlogCard = ({ blog, onClick }) => {
+const BlogCard = ({ blog }) => {
   const navigate = useNavigate();
   return (
     <div
-      className="bg-white rounded-lg shadow-md p-6 mb-6 cursor-pointer hover:shadow-2xl hover:scale-105 hover:bg-orange-50 transition-all duration-300 border border-gray-200 relative flex flex-col justify-between"
-      onClick={onClick}
+      className="bg-white rounded-lg shadow-md p-6 mb-6 hover:shadow-2xl hover:scale-105 hover:bg-orange-50 transition-all duration-300 border border-gray-200 relative flex flex-col justify-between"
       style={{ minHeight: CARD_HEIGHT, maxHeight: CARD_HEIGHT, height: CARD_HEIGHT }}
     >
       <div>

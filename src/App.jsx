@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import CreateBlogPage from "./pages/CreateBlogPage";
@@ -12,6 +11,7 @@ import EditBlogPage from "./pages/EditBlogPage";
 import RecommendationsPage from "./pages/RecommendationsPage";
 import ReadHistoryPage from "./pages/ReadHistoryPage";
 import ProfilePage from "./pages/ProfilePage";
+import HomePage from "./pages/HomePage";
 
 const App = () => (
   <Router>
@@ -29,7 +29,7 @@ const App = () => (
       <Route path="/read-history" element={<ReadHistoryPage />} />
       <Route path="/profile" element={<ProfilePage />} />
       {/* Optionally keep HomePage for direct navigation */}
-      {/* <Route path="/home" element={<HomePage />} /> */}
+      <Route path="/home" element={<HomePage />} />
     </Routes>
   </Router>
 );

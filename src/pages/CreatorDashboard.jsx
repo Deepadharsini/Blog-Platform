@@ -18,7 +18,7 @@ const CreatorDashboard = () => {
             Write Now
           </Link>
           <Link
-            to="/recommendations"
+            to="/home"
             className="px-8 py-4 rounded-lg font-bold text-lg bg-black text-white border-2 border-black transition hover:bg-white hover:text-black shadow-lg"
           >
             Read Now
