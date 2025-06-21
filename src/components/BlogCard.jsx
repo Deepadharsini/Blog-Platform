@@ -40,7 +40,7 @@ const BlogCard = ({ blog }) => {
             e.stopPropagation();
             const token = localStorage.getItem("token");
             if (token) {
-              await fetch(`http://localhost:5000/api/blogs/${blog._id}/view`, {
+              await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/blogs/${blog._id}/view`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
               });

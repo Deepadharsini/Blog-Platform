@@ -18,14 +18,21 @@ const EditBlogPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/blogs/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setTitle(data.title);
-        setContent(data.content);
-        setTags(data.tags.join(", "));
-        setCategory(data.category);
-      });
+    const fetchBlog = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/blogs/${id}`);
+        const data = await res.json();
+        if (res.ok) {
+          setTitle(data.title);
+          setContent(data.content);
+          setTags(data.tags.join(", "));
+          setCategory(data.category);
+        }
+      } catch (err) {
+        setError("Failed to fetch blog");
+      }
+    };
+    fetchBlog();
   }, [id]);
 
   const handleSubmit = async (e) => {
@@ -38,7 +45,7 @@ const EditBlogPage = () => {
       return;
     }
     try {
-      const res = await fetch(`http://localhost:5000/api/blogs/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/blogs/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

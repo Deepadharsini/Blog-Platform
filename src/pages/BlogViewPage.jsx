@@ -12,40 +12,48 @@ const BlogViewPage = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    setLoading(true);
-    setError("");
-    fetch(`http://localhost:5000/api/blogs/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.title) {
-          setBlog(data);
-          if (user && data.likedBy && data.likedBy.some(uid => uid === user._id || (uid._id && uid._id === user._id))) {
-            setLiked(true);
+    const fetchBlog = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/blogs/${id}`);
+        const data = await res.json();
+        if (res.ok) {
+          if (data && data.title) {
+            setBlog(data);
+            if (user && data.likedBy && data.likedBy.some(uid => uid === user._id || (uid._id && uid._id === user._id))) {
+              setLiked(true);
+            } else {
+              setLiked(false);
+            }
           } else {
-            setLiked(false);
+            setError("Blog not found");
           }
-        } else {
-          setError("Blog not found");
         }
-        setLoading(false);
-      })
-      .catch(() => {
+      } catch (e) {
         setError("Failed to fetch blog");
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    fetchBlog();
     // eslint-disable-next-line
   }, [id]);
 
   const handleLike = async () => {
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:5000/api/blogs/${id}/like`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    if (res.ok) {
-      const data = await res.json();
-      setBlog((prev) => ({ ...prev, likes: data.likes }));
-      setLiked(data.liked);
+    if (token) {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/blogs/${id}/like`, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setBlog((prev) => ({ ...prev, likes: data.likes }));
+          setLiked(data.liked);
+        }
+      } catch (e) {
+        setError("Failed to like blog");
+      }
     }
   };
 
