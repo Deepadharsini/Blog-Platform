@@ -118,7 +118,7 @@ This will start the Vitest test runner in watch mode.
 
 ## 🚢 Deployment
 
-This project is designed to be deployed with a decoupled frontend and backend.
+https://feedflow.deepadharsini.me/
 
 ### Frontend (Vercel)
 
@@ -151,6 +151,4 @@ AWS Elastic Beanstalk is a good option for deploying Node.js applications.
 6.  **Configure Environment Properties**: In the "Configuration" > "Software" section of your environment, add the following environment properties:
     -   `MONGO_URI`: Your MongoDB connection string.
     -   `JWT_SECRET`: Your secret key for signing JWTs.
-    -   `PORT`: `8080` (Elastic Beanstalk listens on port 8080 by default).
-    -   `CORS_ORIGIN`: The URL of your deployed Vercel frontend (e.g., `https://your-blog-frontend.vercel.app`).
 7.  **Launch the environment**. AWS will provision the resources and deploy your backend. Once it's ready, you'll get a URL for your API. 
