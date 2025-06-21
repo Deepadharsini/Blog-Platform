@@ -1,101 +1,90 @@
-# FeedFlow: An AI-Powered Blog Recommendation Platform
+# FeedFlow: An AI-Powered Blog Platform 📝
 
-FeedFlow is a full-stack blog application that provides a personalized content experience. It uses an AI-driven recommendation engine to suggest articles to users based on their declared interests and reading history. Creators have a dedicated dashboard to manage their content, while readers get a dynamically curated feed.
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![NodeJS](https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-## ✨ Core Features
+FeedFlow is a full-stack MERN blog application that provides a personalized content experience. It uses an intelligent, category-based recommendation engine to suggest articles to users based on their declared interests and reading history.
 
--   **User Authentication**: Secure user registration and login using JSON Web Tokens (JWT).
--   **Role-Based Access**: Distinct interfaces and permissions for "reader" and "creator" roles.
--   **CRUD Functionality**: Creators can create, read, update, and delete their blog posts.
--   **AI Recommendation Engine**: A dynamic system that suggests relevant articles by creating a combined interest profile from user's explicit interests and reading history.
--   **Personalized Dashboards**: Separate dashboards for creators to manage their blogs and for users to see their reading history.
--   **Modern UI**: A responsive and intuitive user interface built with React and styled with Tailwind CSS.
+## ✨ Features
 
-## 🛠️ Tech Stack
+-   **User Authentication**: Secure login/register with JWT tokens and distinct interfaces for "reader" and "creator" roles.
+-   **Blog Management**: Creators have full CRUD functionality for their blog posts.
+-   **AI-Powered Recommendations**: Smart content suggestions based on user interests and reading history.
+-   **Personalized Experience**: Users can customize their profiles with interests and a profile picture, view their read history, and access dedicated dashboards.
+-   **Dashboard Analytics**: Track reading history and engagement metrics.
+-   **Modern UI**: A responsive and mobile-friendly frontend built with React, Redux, and styled with Tailwind CSS.
+-   **Real-time Updates**: Dynamic content loading and state management for a seamless user experience.
 
--   **Frontend**: React, Redux, React Router, Tailwind CSS, Vite
+## 🧠 AI & Recommendation Approach
+
+The core of this application is its recommendation engine. Initially, the system used NLP to analyze blog content, but this was refined to a more robust **category-based matching system**.
+
+When a creator writes a blog, they assign it a specific category (e.g., "Technology", "Health", "Art"). The recommendation engine then matches these categories with:
+1.  A user's explicitly stated interests.
+2.  The categories of the articles in a user's reading history.
+
+This method is faster, more accurate, and avoids the ambiguity of natural language processing for this use case, resulting in highly relevant content suggestions.
+
+## 🛠️ Tools & Technologies
+
+### AI & Development Tools
+- **ChatGPT**: Used for content generation, code assistance, and brainstorming.
+- **GitHub Copilot & Cursor AI**: Leveraged for AI-powered code completion, refactoring, and generation.
+
+### Design & Planning Tools
+- **Codia, Figma**: UI/UX design, wireframing, and prototyping.
+- **Eraser.io**: Entity-Relationship (ER) diagram design for the database schema.
+- **Draw.io**: Flowchart and process diagram creation.
+
+### Development Stack
+-   **Frontend**: React.js, Vite, Redux Toolkit, React Router, Tailwind CSS
 -   **Backend**: Node.js, Express.js
--   **Database**: MongoDB (with Mongoose)
+-   **Database**: MongoDB with Mongoose
+-   **Testing**: Vitest, React Testing Library, jsdom
 -   **Authentication**: JSON Web Tokens (JWT), bcryptjs
--   **AI/NLP**: No external libraries, custom logic for category matching.
+-   **File Handling**: Multer for image uploads
 
-## 🧠 Recommendation System Approach
+## 🚀 Getting Started
 
-The recommendation engine provides a personalized feed by focusing on content categories rather than complex NLP. This approach is both efficient and reliable.
+Follow these instructions to get the project running on your local machine.
 
-1.  **Combined Interest Profile**: The system creates a dynamic interest profile for each user by combining two sources:
-    -   The user's explicitly selected interests (e.g., "Technology", "Food").
-    -   The categories of all articles in the user's `readHistory`.
+### Prerequisites
 
-2.  **Case-Insensitive Matching**: All interests and categories are converted to lowercase to ensure that, for example, "Technology" and "technology" are treated as the same interest.
-
-3.  **Fetching & Filtering**: The system fetches all blogs whose category matches an interest in the user's combined profile. It then filters out any articles the user has already read, ensuring only new content is recommended.
-
-4.  **Seamless Fallback**: If no new recommendations are found, the system doesn't show an empty page. Instead, it seamlessly displays articles from the user's reading history under the main "Personalized Recommendations" heading, creating a consistent and engaging user experience.
-
-## 📁 Project Structure
-
-```
-blog/
-├── client/         # React Frontend
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── redux/
-│   │   └── App.jsx
-│   └── package.json
-│
-└── server/         # Node.js Backend
-    ├── config/
-    ├── controllers/
-    ├── middleware/
-    ├── models/
-    ├── routes/
-    └── app.js
-```
-
-## 📋 Prerequisites
-
--   Node.js (v14 or later)
+-   Node.js (v18 or later)
 -   npm
--   MongoDB (local installation or a cloud service like MongoDB Atlas)
+-   MongoDB (local installation or a cloud instance like MongoDB Atlas)
 
-## 🚀 Installation & Setup
+### 1. Clone the Repository
 
-Follow these steps to get the application running locally.
+```bash
+git clone <repository-url>
+cd blog
+```
 
-### 1. Backend Setup
-
-First, navigate to the `server` directory. Since there is no `package.json` in the server directory, you will need to manually install the required packages.
+### 2. Backend Setup
 
 ```bash
 # Navigate to the server directory
 cd server
 
-# Install dependencies manually
-npm install express mongoose cors dotenv bcryptjs jsonwebtoken
-```
+# Install dependencies
+npm install
 
-Next, you need to create a `.env` file in the `server` directory to store your environment variables.
-
-```bash
-# In the /server directory, create a .env file
-touch .env
-```
-
-Open the `.env` file and add the following variables. Replace the placeholder values with your actual MongoDB connection string and a secret key for JWT.
-
-```env
-# /server/.env
-
+# Create a .env file in the /server directory
+# and add the following variables:
+MONGO_URI=<your_mongodb_connection_string>
+JWT_SECRET=<your_jwt_secret>
 PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_super_secret_jwt_key
+
+# Start the backend server
+npm start
 ```
 
-### 2. Frontend Setup
-
-In a separate terminal, navigate to the `client` directory and install the dependencies using npm.
+### 3. Frontend Setup
 
 ```bash
 # Navigate to the client directory from the root
@@ -103,32 +92,61 @@ cd client
 
 # Install dependencies
 npm install
+
+# Start the frontend development server
+npm run dev
 ```
+The app will be accessible at `http://localhost:5173`.
 
-### 3. Running the Application
+## 🧪 Testing
 
-Once both the backend and frontend are set up, you can start their development servers.
+This project uses [Vitest](https://vitest.dev/) for unit and component testing. The tests are located in the `client/src/tests` directory.
 
--   **To start the backend server:**
-    Run this command from the `server` directory.
+### Running Tests
 
-    ```bash
-    # From /server
-    node app.js
-    ```
-    The API should now be running at `http://localhost:5000`.
+To run the entire test suite, navigate to the `client` directory and run:
 
--   **To start the frontend development server:**
-    Run this command from the `client` directory.
+```bash
+# From /client
+npm test
+```
+This will start the Vitest test runner in watch mode.
 
-    ```bash
-    # From /client
-    npm run dev
-    ```
-    The application should now be accessible at `http://localhost:5173` (or another port if 5173 is in use).
+## 🚢 Deployment
 
-🌐 Live Demo
-Frontend Link | Backend API
+This project is designed to be deployed with a decoupled frontend and backend.
 
-🧪 Test Report
-See /docs/test-report.md 
+### Frontend (Vercel)
+
+Vercel is a great choice for deploying modern frontend frameworks like React.
+
+1.  **Push your code to a GitHub repository.**
+2.  **Sign up for Vercel** and connect your GitHub account.
+3.  **Create a new project** and import your blog's repository.
+4.  **Configure the project:**
+    -   **Framework Preset**: Select `Vite`.
+    -   **Root Directory**: Set this to `client`. This tells Vercel where your frontend code is located.
+    -   **Build Command**: `npm run build` or `vite build`.
+    -   **Output Directory**: `dist`.
+5.  **Add Environment Variables**:
+    -   Create an environment variable called `VITE_API_URL` and set its value to the URL of your deployed AWS backend (e.g., `https://your-backend-api.us-east-1.elasticbeanstalk.com`).
+6.  **Deploy!** Vercel will automatically build and deploy your frontend.
+
+### Backend (AWS Elastic Beanstalk)
+
+AWS Elastic Beanstalk is a good option for deploying Node.js applications.
+
+1.  **Prepare your `server` code for production**:
+    -   Ensure your `server/app.js` or `server/server.js` is configured to handle CORS requests from your Vercel frontend URL.
+2.  **Zip your `server` directory**.
+3.  **Create an AWS Account** if you don't have one.
+4.  **Go to the Elastic Beanstalk service** in the AWS Console.
+5.  **Create a new application**:
+    -   **Platform**: Select `Node.js`.
+    -   **Application code**: Upload the zip file of your `server` directory.
+6.  **Configure Environment Properties**: In the "Configuration" > "Software" section of your environment, add the following environment properties:
+    -   `MONGO_URI`: Your MongoDB connection string.
+    -   `JWT_SECRET`: Your secret key for signing JWTs.
+    -   `PORT`: `8080` (Elastic Beanstalk listens on port 8080 by default).
+    -   `CORS_ORIGIN`: The URL of your deployed Vercel frontend (e.g., `https://your-blog-frontend.vercel.app`).
+7.  **Launch the environment**. AWS will provision the resources and deploy your backend. Once it's ready, you'll get a URL for your API. 
