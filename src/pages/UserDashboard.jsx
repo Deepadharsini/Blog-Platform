@@ -16,15 +16,17 @@ const UserDashboard = () => {
       setError("");
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:5000/api/dashboard/creator", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = await res.json();
-        if (!res.ok) {
-          setError(data.message || "Failed to fetch blogs");
-          setBlogs([]);
-        } else {
-          setBlogs(data.blogs || []);
+        if (token) {
+          const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/dashboard/creator`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            setError(data.message || "Failed to fetch blogs");
+            setBlogs([]);
+          } else {
+            setBlogs(data.blogs || []);
+          }
         }
       } catch (err) {
         setError("Failed to fetch blogs");
@@ -39,14 +41,16 @@ const UserDashboard = () => {
     if (!window.confirm("Are you sure you want to delete this blog?")) return;
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:5000/api/blogs/${id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (res.ok) {
-        setBlogs(blogs.filter((b) => b._id !== id));
-      } else {
-        alert("Failed to delete blog");
+      if (token) {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/blogs/${id}`, {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.ok) {
+          setBlogs(blogs.filter((b) => b._id !== id));
+        } else {
+          alert("Failed to delete blog");
+        }
       }
     } catch {
       alert("Failed to delete blog");

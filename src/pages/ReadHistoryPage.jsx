@@ -22,17 +22,19 @@ const ReadHistoryPage = () => {
       setError("");
       try {
         const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:5000/api/dashboard/read-history", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = await res.json();
-        
-        if (!res.ok) {
-          setError(data.message || "Failed to fetch read history");
-          setReadHistory([]);
-        } else {
-          setReadHistory(data.readHistory || []);
-          setCategoryCounts(data.categoryCounts || {});
+        if (token) {
+          const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/dashboard/read-history`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const data = await res.json();
+          
+          if (!res.ok) {
+            setError(data.message || "Failed to fetch read history");
+            setReadHistory([]);
+          } else {
+            setReadHistory(data.readHistory || []);
+            setCategoryCounts(data.categoryCounts || {});
+          }
         }
       } catch (err) {
         setError("Failed to fetch read history");
@@ -69,6 +71,21 @@ const ReadHistoryPage = () => {
     }
     
     return "Uncategorized";
+  };
+
+  const handleBlogClick = async (blog) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (token) {
+        await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/blogs/${blog._id}/view`, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      }
+      navigate(`/blog/${blog._id}`);
+    } catch (err) {
+      console.error("Failed to mark blog as read:", err);
+    }
   };
 
   if (!user) {
@@ -148,16 +165,7 @@ const ReadHistoryPage = () => {
                       <span>{blog.views || 0} views</span>
                     </div>
                     <button 
-                      onClick={async () => {
-                        const token = localStorage.getItem("token");
-                        if (token) {
-                          await fetch(`http://localhost:5000/api/blogs/${blog._id}/view`, {
-                            method: "POST",
-                            headers: { Authorization: `Bearer ${token}` },
-                          });
-                        }
-                        navigate(`/blog/${blog._id}`);
-                      }}
+                      onClick={() => handleBlogClick(blog)}
                       className="mt-3 w-full bg-orange-700 hover:bg-orange-600 text-white py-2 rounded transition"
                     >
                       Read Again

@@ -22,7 +22,7 @@ const ProfilePage = () => {
         return;
       }
       try {
-        const res = await fetch(`http://localhost:5000/api/user/profile`, {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) {
@@ -50,7 +50,7 @@ const ProfilePage = () => {
     formData.append("profilePic", selectedFile);
 
     try {
-      const res = await fetch(`http://localhost:5000/api/user/profile/upload`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/profile/upload`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -82,7 +82,7 @@ const ProfilePage = () => {
     setError("");
     setSuccess("");
     try {
-      const res = await fetch(`http://localhost:5000/api/user/profile`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

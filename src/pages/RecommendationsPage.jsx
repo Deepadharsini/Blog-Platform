@@ -18,18 +18,21 @@ const RecommendationsPage = () => {
       setLoading(true);
       setError("");
       try {
-        const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:5000/api/recommendations", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = await res.json();
-        if (!res.ok) {
-          setError(data.message || "Failed to fetch recommendations");
-          setNewRecommendations([]);
-          setReadHistory([]);
-        } else {
-          setNewRecommendations(data.newRecommendations || []);
-          setReadHistory(data.readHistory || []);
+        if (user && localStorage.getItem("token")) {
+          // Fetch personalized recommendations
+          const token = localStorage.getItem("token");
+          const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/recommendations`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            setError(data.message || "Failed to fetch recommendations");
+            setNewRecommendations([]);
+            setReadHistory([]);
+          } else {
+            setNewRecommendations(data.newRecommendations || []);
+            setReadHistory(data.readHistory || []);
+          }
         }
       } catch (err) {
         setError("Failed to fetch recommendations");
