@@ -19,6 +19,20 @@ FeedFlow is a full-stack blog application that provides a personalized content e
 -   **Authentication**: JSON Web Tokens (JWT), bcryptjs
 -   **AI/NLP**: No external libraries, custom logic for category matching.
 
+## 🧠 Recommendation System Approach
+
+The recommendation engine provides a personalized feed by focusing on content categories rather than complex NLP. This approach is both efficient and reliable.
+
+1.  **Combined Interest Profile**: The system creates a dynamic interest profile for each user by combining two sources:
+    -   The user's explicitly selected interests (e.g., "Technology", "Food").
+    -   The categories of all articles in the user's `readHistory`.
+
+2.  **Case-Insensitive Matching**: All interests and categories are converted to lowercase to ensure that, for example, "Technology" and "technology" are treated as the same interest.
+
+3.  **Fetching & Filtering**: The system fetches all blogs whose category matches an interest in the user's combined profile. It then filters out any articles the user has already read, ensuring only new content is recommended.
+
+4.  **Seamless Fallback**: If no new recommendations are found, the system doesn't show an empty page. Instead, it seamlessly displays articles from the user's reading history under the main "Personalized Recommendations" heading, creating a consistent and engaging user experience.
+
 ## 📁 Project Structure
 
 ```
@@ -115,9 +129,6 @@ Once both the backend and frontend are set up, you can start their development s
 
 🌐 Live Demo
 Frontend Link | Backend API
-
-🧠 AI Explanation
-We extract blog keywords and sentiment, convert them to vectors, and match users to blogs using cosine similarity based on reading history and interests.
 
 🧪 Test Report
 See /docs/test-report.md 
