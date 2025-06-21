@@ -50,9 +50,12 @@ const BlogViewPage = () => {
   };
 
   return (
-    <div>
+    <div 
+      className="min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/gray.jpeg')" }}
+    >
       <Header />
-      <div className="max-w-4xl mx-auto mt-10 p-8 bg-white rounded shadow relative">
+      <div className="max-w-4xl mx-auto mt-10 p-8 bg-white/80 backdrop-blur-sm rounded shadow relative">
         {loading ? (
           <div className="text-center text-gray-500 py-8">Loading...</div>
         ) : error ? (
@@ -60,7 +63,7 @@ const BlogViewPage = () => {
         ) : blog ? (
           <>
             {/* Heart icon in top right */}
-            <div className="absolute top-6 right-8 flex flex-col items-center z-10">
+            <div className="absolute top-8 right-8 flex flex-col items-center z-10">
               <button
                 onClick={handleLike}
                 className="focus:outline-none"

@@ -10,6 +10,7 @@ import CreatorDashboard from "./pages/CreatorDashboard";
 import RoleSelectionPage from "./pages/RoleSelectionPage";
 import EditBlogPage from "./pages/EditBlogPage";
 import RecommendationsPage from "./pages/RecommendationsPage";
+import ReadHistoryPage from "./pages/ReadHistoryPage";
 
 const App = () => (
   <Router>
@@ -24,6 +25,7 @@ const App = () => (
       <Route path="/creator-dashboard" element={<CreatorDashboard />} />
       <Route path="/edit/:id" element={<EditBlogPage />} />
       <Route path="/recommendations" element={<RecommendationsPage />} />
+      <Route path="/read-history" element={<ReadHistoryPage />} />
       {/* Optionally keep HomePage for direct navigation */}
       {/* <Route path="/home" element={<HomePage />} /> */}
     </Routes>

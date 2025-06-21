@@ -10,9 +10,12 @@ const RoleSelectionPage = () => {
   };
 
   return (
-    <div>
+    <div 
+      className="min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/wallpaper.png')" }}
+    >
       <Header />
-      <div className="max-w-md mx-auto mt-20 p-8 bg-white rounded shadow text-center">
+      <div className="max-w-md mx-auto mt-20 p-8 bg-white opacity-60 backdrop-blur-sm rounded shadow text-center">
         <h2 className="text-2xl font-bold mb-6">Select Your Role</h2>
         <div className="flex flex-col gap-6">
           <button

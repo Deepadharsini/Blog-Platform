@@ -18,6 +18,13 @@ const Header = ({ user }) => {
         {user ? (
           <>
             <span className="ml-2 text-lg font-semibold">Hi, {user.name}</span>
+            <Link
+              to="/read-history"
+              className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded transition font-semibold"
+              style={{ minWidth: '100px', textAlign: 'center' }}
+            >
+              Read History
+            </Link>
             {user.role === "creator" ? (
               <>
                 <Link
@@ -35,8 +42,18 @@ const Header = ({ user }) => {
           </>
         ) : (
           <>
-            <Link to="/login">Login</Link>
-            <Link to="/register" className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded">
+            <Link 
+              to="/select-role" 
+              className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded transition font-semibold"
+              style={{ minWidth: '100px', textAlign: 'center' }}
+            >
+              Login
+            </Link>
+            <Link 
+              to="/register" 
+              className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded transition font-semibold ml-2"
+              style={{ minWidth: '100px', textAlign: 'center' }}
+            >
               Register
             </Link>
           </>

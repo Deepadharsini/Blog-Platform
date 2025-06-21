@@ -60,9 +60,12 @@ const UserDashboard = () => {
 
   // If user is a creator, show their blogs dashboard (original content)
   return (
-    <div className="min-h-screen bg-black-200">
+    <div 
+      className="min-h-screen bg-cover bg-center bg-no-repeat opacity-90"
+      style={{ backgroundImage: "url('/gray.jpeg')" }}
+    >
       <Header user={user} />
-      <div className="max-w-3xl mx-auto mt-10 p-8 bg-gray-200 rounded-2xl shadow-xl border border-[#f5f5dc]">
+      <div className="max-w-3xl mx-auto mt-10 p-8 bg-gray-300  rounded-2xl shadow-xl">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-extrabold text-black tracking-tight">All Blogs</h2>
           <Link to="/create" className="bg-black hover:bg-orange-700 text-white font-semibold px-5 py-2 rounded-lg shadow-md border border-yellow-600 transition">
@@ -89,7 +92,7 @@ const UserDashboard = () => {
               </thead>
               <tbody>
                 {blogs.map((blog) => (
-                  <tr key={blog._id} className="bg-[#fff] border border-[#f5f5dc] shadow-sm hover:bg-gray-100 transition">
+                  <tr key={blog._id} className="bg-[#fff] border border-[#f5f5dc] shadow-sm hover:bg-orange-100 transition">
                     <td className="py-3 px-4 text-black font-medium rounded-l-lg cursor-pointer hover:underline" onClick={() => navigate(`/blog/${blog._id}`)}>{blog.title}</td>
                     <td className="py-3 px-4 text-black">{blog.author?.name || "Unknown"}</td>
                     <td className="py-3 px-4 text-black">{blog.views}</td>

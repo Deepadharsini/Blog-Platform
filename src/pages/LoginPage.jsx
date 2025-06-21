@@ -43,9 +43,12 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
+    <div 
+      className="min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/wallpaper.png')" }}
+    >
       <Header />
-      <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
+      <div className="max-w-md mx-auto mt-10 p-6 bg-white opacity-60 backdrop-blur-sm rounded shadow">
         <h2 className="text-xl font-bold mb-4">
           {selectedRole === "creator" ? "Creator Login" : "Reader Login"}
         </h2>
@@ -70,7 +73,7 @@ const LoginPage = () => {
           </button>
         </form>
         <div className="mt-4 text-sm">
-          Don't have an account? <Link to="/register" className="text-blue-700">Register</Link>
+          Don't have an account? <Link to="/register" className="text-blue-700 font-semibold">Register</Link>
         </div>
       </div>
     </div>

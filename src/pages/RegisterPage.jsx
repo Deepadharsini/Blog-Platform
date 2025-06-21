@@ -46,9 +46,12 @@ const RegisterPage = () => {
   };
 
   return (
-    <div>
+    <div 
+      className="min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/wallpaper.png')" }}
+    >
       <Header />
-      <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
+      <div className="max-w-md mx-auto mt-10 p-6 bg-white opacity-60 backdrop-blur-sm rounded shadow">
         <h2 className="text-xl font-bold mb-4">Register</h2>
         <form onSubmit={handleRegister} className="flex flex-col gap-4">
           <input
@@ -93,7 +96,7 @@ const RegisterPage = () => {
           </button>
         </form>
         <div className="mt-4 text-sm">
-          Already have an account? <Link to="/login" className="text-blue-700">Login</Link>
+          Already have an account? <Link to="/login" className="text-blue-700 font-semibold">Login</Link>
         </div>
       </div>
     </div>
