@@ -21,6 +21,8 @@ if (!fs.existsSync(uploadsDir)) {
 const app = express();
 dotenv.config(); 
 
+app.set('trust proxy', 1); // Trust first proxy
+
 app.use(cors());
 app.use(express.json());
 

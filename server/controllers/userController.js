@@ -3,7 +3,8 @@ const User = require("../models/User");
 // Helper to construct full URL
 const getFullImageUrl = (req, path) => {
   if (!path) return "";
-  return `${req.protocol}://${req.get("host")}${path}`;
+  const protocol = req.secure ? 'https' : 'http';
+  return `${protocol}://${req.get("host")}${path}`;
 };
 
 // @desc    Get user profile
