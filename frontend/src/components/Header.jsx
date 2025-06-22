@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [user, setUser] = useState(null);
 
@@ -18,6 +19,10 @@ const Header = () => {
     setUser(null);
     navigate("/select-role");
   };
+
+  // Paths where login/register buttons should be hidden
+  const noAuthButtonPaths = ['/', '/select-role', '/login', '/register'];
+  const showAuthButtons = !noAuthButtonPaths.includes(location.pathname);
 
   return (
     <header className="bg-black text-white px-6 py-5 flex justify-between items-center" style={{ minHeight: '68px' }}>
@@ -73,22 +78,24 @@ const Header = () => {
             </div>
           </div>
         ) : (
-          <>
-            <Link 
-              to="/select-role" 
-              className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded transition font-semibold"
-              style={{ minWidth: '100px', textAlign: 'center' }}
-            >
-              Login
-            </Link>
-            <Link 
-              to="/register" 
-              className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded transition font-semibold ml-2"
-              style={{ minWidth: '100px', textAlign: 'center' }}
-            >
-              Register
-            </Link>
-          </>
+          showAuthButtons && (
+            <div className="flex items-center gap-4">
+              <Link
+                to="/select-role"
+                className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded transition font-semibold"
+                style={{ minWidth: '100px', textAlign: 'center' }}
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="bg-white hover:bg-orange-600 text-black px-3 py-1 rounded transition font-semibold"
+                style={{ minWidth: '100px', textAlign: 'center' }}
+              >
+                Register
+              </Link>
+            </div>
+          )
         )}
       </nav>
     </header>
