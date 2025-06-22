@@ -47,7 +47,7 @@ const RegisterPage = () => {
       if (data.user.role === "creator") {
         navigate("/creator-dashboard");
       } else {
-        navigate("/dashboard");
+        navigate("/home");
       }
     } catch (err) {
       setError("Registration failed");

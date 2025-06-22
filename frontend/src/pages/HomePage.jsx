@@ -10,8 +10,14 @@ const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOption, setSortOption] = useState("newest-to-oldest");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsAuthenticated(true);
+    }
+
     const fetchBlogs = async () => {
       setLoading(true);
       setError("");
@@ -81,13 +87,15 @@ const HomePage = () => {
       <div className="container mx-auto mt-10 p-4">
         <div className="flex items-center justify-between mb-8 mx-4">
           <div className="flex items-center">
-            <Link to="/recommendations" className="flex-shrink-0">
-              <button className="bg-orange-700 hover:bg-orange-600 text-white font-bold rounded-full w-32 h-32 flex items-center justify-center text-center shadow-lg">
-                Personalised
-                <br />
-                for you
-              </button>
-            </Link>
+            {isAuthenticated && (
+              <Link to="/recommendations" className="flex-shrink-0">
+                <button className="bg-orange-700 hover:bg-orange-600 text-white font-bold rounded-full w-32 h-32 flex items-center justify-center text-center shadow-lg">
+                  Personalised
+                  <br />
+                  for you
+                </button>
+              </Link>
+            )}
             <h2 className="text-3xl font-bold text-black ml-8">
               Uncover what others are sharing!!!
             </h2>
@@ -127,7 +135,6 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-
         {loading ? (
           <div className="text-center text-white">Loading...</div>
         ) : error ? (
