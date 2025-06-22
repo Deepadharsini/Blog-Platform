@@ -65,12 +65,8 @@ const ProfilePage = () => {
       setUser(updatedUser);
       localStorage.setItem("user", JSON.stringify(updatedUser));
       
-      setSuccess("Profile picture updated! Reloading...");
-      
-      // Reload the page to reflect changes everywhere
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
+      setSuccess("Profile picture updated successfully!");
+      setSelectedFile(null); // Clear the selected file
 
     } catch (err) {
       setError(err.message);
