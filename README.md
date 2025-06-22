@@ -27,13 +27,13 @@ When a creator writes a blog, they assign it a specific category (e.g., "Technol
 1.  A user's explicitly stated interests.
 2.  The categories of the articles in a user's reading history.
 
-This method is faster, more accurate, and avoids the ambiguity of natural language processing for this use case, resulting in highly relevant content suggestions.
+This method is faster, more accurate, and using natural language processing for this use case, resulting in highly relevant content suggestions.
 
 ## 🛠️ Tools & Technologies
 
 ### AI & Development Tools
 - **ChatGPT**: Used for content generation, code assistance, and brainstorming.
-- **GitHub Copilot & Cursor AI**: Leveraged for AI-powered code completion, refactoring, and generation.
+- **Cursor AI**: Leveraged for AI-powered code completion, refactoring, and generation.
 
 ### Design & Planning Tools
 - **Codia, Figma**: UI/UX design, wireframing, and prototyping.
