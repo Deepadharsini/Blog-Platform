@@ -77,55 +77,82 @@ exports.getBlogById = async (req, res) => {
 
 exports.updateBlog = async (req, res) => {
   try {
+    console.log("--- UPDATE BLOG: START ---");
+
     const blog = await Blog.findById(req.params.id);
-    if (!blog) return res.status(404).json({ message: "Blog not found" });
+    if (!blog) {
+      console.log("--- UPDATE BLOG: FAILED - Blog not found ---");
+      return res.status(404).json({ message: "Blog not found" });
+    }
     if (String(blog.author) !== String(req.user._id)) {
+      console.log("--- UPDATE BLOG: FAILED - Not authorized ---");
       return res.status(403).json({ message: "Not authorized" });
     }
-    
-    // Get all existing blogs to build a comprehensive keyword bank
+
+    console.log("--- UPDATE BLOG: Processing tags ---");
+    let tagsArray = [];
+    if (Array.isArray(req.body.tags)) {
+      console.log("Tags received as an array.");
+      tagsArray = req.body.tags;
+    } else if (typeof req.body.tags === 'string') {
+      console.log("Tags received as a string, splitting it.");
+      tagsArray = req.body.tags.split(",").map((t) => t.trim()).filter(Boolean);
+    } else {
+      console.log("Tags are null or undefined, defaulting to empty array.");
+    }
+    console.log("Processed tags:", JSON.stringify(tagsArray));
+
+
+    console.log("--- UPDATE BLOG: Building keyword bank ---");
     const allBlogs = await Blog.find();
     let allKeywords = [];
-    
-    // Collect keywords from all existing blogs
     allBlogs.forEach(existingBlog => {
-      if (existingBlog.keywords && existingBlog.keywords.length > 0) {
+      if (existingBlog.keywords && Array.isArray(existingBlog.keywords)) {
         allKeywords = allKeywords.concat(existingBlog.keywords);
       }
-      if (existingBlog.tags && existingBlog.tags.length > 0) {
+      if (existingBlog.tags && Array.isArray(existingBlog.tags)) {
         allKeywords = allKeywords.concat(existingBlog.tags);
       }
     });
-    
-    // Add current blog's new tags to the keyword bank
-    if (req.body.tags && req.body.tags.length > 0) {
-      allKeywords = allKeywords.concat(req.body.tags);
-    }
-    
-    // Remove duplicates and create final keyword bank
+    allKeywords = allKeywords.concat(tagsArray);
     allKeywords = Array.from(new Set(allKeywords));
-    
-    // Update blog fields
+    console.log("Keyword bank size:", allKeywords.length);
+
+
+    console.log("--- UPDATE BLOG: Updating blog fields ---");
     blog.title = req.body.title;
     blog.content = req.body.content;
-    blog.tags = req.body.tags;
+    blog.tags = tagsArray;
     blog.category = req.body.category;
-    
-    // Regenerate keywords and vector
+    console.log("Blog fields updated in memory.");
+
+
+    console.log("--- UPDATE BLOG: NLP Enrichment ---");
     const keywords = extractKeywords(req.body.content);
+    console.log("Extracted keywords:", JSON.stringify(keywords));
+
     const sentiment = getSentiment(req.body.content);
-    const blogText = `${req.body.title} ${req.body.content} ${req.body.tags.join(" ")}`;
+    console.log("Determined sentiment:", sentiment);
+
+    const blogText = `${req.body.title} ${req.body.content} ${tagsArray.join(" ")}`;
     const vector = textToVector(blogText, allKeywords);
-    
+    console.log("Generated vector. Is it an array?", Array.isArray(vector));
+    if(Array.isArray(vector)) {
+        console.log("Does vector contain NaN?", vector.some(isNaN));
+    }
+
+
     blog.keywords = keywords;
     blog.sentiment = sentiment;
     blog.vector = vector;
-    
+    console.log("--- UPDATE BLOG: All fields ready for save ---");
+
     await blog.save();
+    console.log("--- UPDATE BLOG: SUCCESS ---");
     res.json(blog);
   } catch (err) {
-    console.error("Blog update error:", err);
-    res.status(500).json({ message: "Error updating blog" });
+    console.error("!!! CRITICAL: Blog update failed !!!", err);
+    res.status(500).json({ message: "Error updating blog", error: err.message });
   }
 };
 
