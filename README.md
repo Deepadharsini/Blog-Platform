@@ -135,7 +135,7 @@ Vercel is a great choice for deploying modern frontend frameworks like React.
     -   Create an environment variable called `VITE_API_URL` and set its value to the URL of your deployed AWS backend (e.g., `https://your-backend-api.us-east-1.elasticbeanstalk.com`).
 6.  **Deploy!** Vercel will automatically build and deploy your frontend.
 
-🖥️ Backend Deployment (AWS EC2)
+### 🖥️ Backend Deployment (AWS EC2)
 AWS EC2 is used to host the Node.js backend server for FeedFlow.
 
 Prepare your backend code:
