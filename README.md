@@ -135,19 +135,58 @@ Vercel is a great choice for deploying modern frontend frameworks like React.
     -   Create an environment variable called `VITE_API_URL` and set its value to the URL of your deployed AWS backend (e.g., `https://your-backend-api.us-east-1.elasticbeanstalk.com`).
 6.  **Deploy!** Vercel will automatically build and deploy your frontend.
 
-### Backend (AWS Elastic Beanstalk)
+🖥️ Backend Deployment (AWS EC2)
+AWS EC2 is used to host the Node.js backend server for FeedFlow.
 
-AWS Elastic Beanstalk is a good option for deploying Node.js applications.
+Prepare your backend code:
 
-1.  **Prepare your `server` code for production**:
-    -   Ensure your `server/app.js` or `server/server.js` is configured to handle CORS requests from your Vercel frontend URL.
-2.  **Zip your `server` directory**.
-3.  **Create an AWS Account** if you don't have one.
-4.  **Go to the Elastic Beanstalk service** in the AWS Console.
-5.  **Create a new application**:
-    -   **Platform**: Select `Node.js`.
-    -   **Application code**: Upload the zip file of your `server` directory.
-6.  **Configure Environment Properties**: In the "Configuration" > "Software" section of your environment, add the following environment properties:
-    -   `MONGO_URI`: Your MongoDB connection string.
-    -   `JWT_SECRET`: Your secret key for signing JWTs.
-7.  **Launch the environment**. AWS will provision the resources and deploy your backend. Once it's ready, you'll get a URL for your API. 
+Ensure server.js (or app.js) includes proper CORS configuration to allow requests from the frontend URL (e.g., Vercel).
+
+Set environment variables using .env for MONGO_URI, JWT_SECRET, etc.
+
+Launch an EC2 Instance:
+
+Go to the AWS Console → EC2 → Launch Instance.
+
+Choose an Ubuntu or Amazon Linux AMI and open necessary ports (e.g., 22 for SSH, 5000 or 80 for your server).
+
+Use a t2.micro instance (eligible for free tier).
+
+Install Required Software on EC2:
+SSH into your instance and run:
+
+bash
+Copy
+Edit
+sudo apt update
+sudo apt install nodejs npm git
+git clone <your-backend-repo-url>
+cd server
+npm install
+Set Environment Variables:
+
+Create a .env file or export variables directly:
+
+bash
+Copy
+Edit
+export MONGO_URI=your_mongo_uri
+export JWT_SECRET=your_jwt_secret
+Start the Server:
+
+You can run it directly with node server.js, or use a process manager like PM2 to keep it alive:
+
+bash
+Copy
+Edit
+npm install -g pm2
+pm2 start server.js
+(Optional) Configure NGINX as a Reverse Proxy:
+
+Install and configure NGINX to forward traffic from port 80 to your Node.js server running on port 5000.
+
+Get Your Public IP / Domain:
+
+Use the EC2 public IPv4 or associate a custom domain with it.
+
+Update the frontend .env (Vercel) to point to the EC2 backend URL.
